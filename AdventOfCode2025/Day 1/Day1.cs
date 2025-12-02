@@ -4,6 +4,8 @@
     {
         public static void Run()
         {
+            Console.WriteLine("Running Day 1");
+
             var dial = new DialHelper(50);
 
             dial.FollowList(@"L50
