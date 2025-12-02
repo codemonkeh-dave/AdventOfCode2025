@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AdventOfCode2025
+﻿namespace AdventOfCode2025
 {
     public class DialHelper
     {
-
         private int _startingPosition;
         private int _currentPosition;
-        private int _zeroPositionCount = 0;
+        private int _endedAtzeroPositionCount = 0;
+        private int _hitZeroPositionCount = 0;
         public DialHelper(int startingPosition = 0)
         {
             _startingPosition = startingPosition;
@@ -28,15 +21,18 @@ namespace AdventOfCode2025
                 {
                     _currentPosition = 99;
                 }
+
+                if (_currentPosition == 0)
+                    _hitZeroPositionCount++;
             }
 
             if (_currentPosition == 0)
             {
-                _zeroPositionCount++;
+                _endedAtzeroPositionCount++;
             }
 
             return this;
-        }
+        } 
 
         public DialHelper R(int steps)
         {
@@ -47,11 +43,14 @@ namespace AdventOfCode2025
                 {
                     _currentPosition = 0;
                 }
+
+                if (_currentPosition == 0)
+                    _hitZeroPositionCount++;
             }
 
             if (_currentPosition == 0)
             {
-                _zeroPositionCount++;
+                _endedAtzeroPositionCount++;
             }
 
             return this;
@@ -85,9 +84,14 @@ namespace AdventOfCode2025
             return _currentPosition;
         }
 
-        public int GetZeroPositionCount()
+        public int GetEndedAtZeroPositionCount()
         {
-            return _zeroPositionCount;
+            return _endedAtzeroPositionCount;
+        }
+
+        public int GetHitZeroPositionCount()
+        {
+            return _hitZeroPositionCount;
         }
 
     }
