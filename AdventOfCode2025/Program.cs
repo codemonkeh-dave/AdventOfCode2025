@@ -1,5 +1,6 @@
 ﻿using AdventOfCode2025.Day_1;
 using AdventOfCode2025.Day_2;
+using AdventOfCode2025.Day3;
 
-Day1.Run();
-Day2.Run();
+
+Day3.Run();
