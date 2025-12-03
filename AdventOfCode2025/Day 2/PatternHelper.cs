@@ -1,4 +1,6 @@
-﻿namespace AdventOfCode2025.Day_2
+﻿using System;
+
+namespace AdventOfCode2025.Day_2
 {
     public static class PatternHelper
     {
@@ -6,18 +8,43 @@
         public static long? GetPatternNumber(long number)
         {
             string numberAsString = number.ToString();
-            var length = numberAsString.Length;
+            var lengthOfNumber = numberAsString.Length;
 
-            if (EvenLength(number))
+            
+
+            for (int numberOfPartsToSplintNumberInto=lengthOfNumber; 
+                     numberOfPartsToSplintNumberInto>=2;numberOfPartsToSplintNumberInto--)
             {
-                var leftHalf = numberAsString.Substring(0, length/2);
-                var rightHalf = numberAsString.Substring(length / 2, length / 2);
-                if (leftHalf == rightHalf)
+                if (lengthOfNumber % numberOfPartsToSplintNumberInto == 0)
                 {
-                    return number;
+                    int sizeOfPart = lengthOfNumber / numberOfPartsToSplintNumberInto;
+                    List<string> parts = new List<string>();
+
+                    for (int currentStartIndex = 0; currentStartIndex <= lengthOfNumber - sizeOfPart; currentStartIndex+= sizeOfPart)
+                    {
+                        parts.Add(numberAsString.Substring(currentStartIndex, sizeOfPart));
+                    }
+
+                    var firstPart = parts.First();
+                    if (parts.All(p => p == firstPart))
+                    {
+                        return number;
+                    }
                 }
             }
+
             return null;
+
+            //if (EvenLength(number))
+            //{
+            //    var leftHalf = numberAsString.Substring(0, lengthOfNumber/2);
+            //    var rightHalf = numberAsString.Substring(lengthOfNumber / 2, lengthOfNumber / 2);
+            //    if (leftHalf == rightHalf)
+            //    {
+            //        return number;
+            //    }
+            //}
+            //return null;
         }
 
         private static bool EvenLength(long number)

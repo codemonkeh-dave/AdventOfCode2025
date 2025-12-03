@@ -25,6 +25,7 @@ namespace AdventOfCode2025.Day_2
                 }
             }
             Console.WriteLine($"Invalid sum = {invalidSum}");
+            Console.ReadLine();
         }
     }
 }
