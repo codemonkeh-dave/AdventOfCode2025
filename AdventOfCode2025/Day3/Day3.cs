@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdventOfCode2025.Day3
+namespace AdventOfCode2025.Day_3
 {
     public static class Day3
     {

@@ -15,42 +15,57 @@ namespace AdventOfCode2025.Day2
 
         public static int GetJoltage(string bank)
         {
+            bool lastNumberWasHighestNumber = false;
             if (bank == String.Empty)
                 return 0;
 
-            List<string> numbers = new List<string>();
+            List<string> numberList = new List<string>();
             foreach (char c in bank)
             {
-                numbers.Add(c.ToString());
+                numberList.Add(c.ToString());
             }
+            List<string> numberListStored = GetSorted(numberList);
 
-            var numbersSorted = new List<string>();
-            foreach (var s in numbers)
+            var highestNumber = numberListStored.First();
+            var highestNumberPosition = numberList.FindIndex(n => n == highestNumber);
+
+            var numberListAfterFirstHighestPosition = numberList.GetRange(highestNumberPosition + 1, numberList.Count() - highestNumberPosition - 1);
+            
+            if (numberListAfterFirstHighestPosition.Count() == 0) // last number was highest
             {
-                numbersSorted.Add(s);
+                lastNumberWasHighestNumber = true;
+                numberListAfterFirstHighestPosition = numberList.GetRange(0, numberList.Count() - 1);
             }
-            numbersSorted.Sort();
-            numbersSorted.Reverse();
 
-            var highestNumber = numbersSorted.First();
-            var highestNumberPosition = numbers.FindIndex(n => n == highestNumber);
+            var numberListAfterFirstHighestPositionSorted = GetSorted(numberListAfterFirstHighestPosition);
 
-            numbers.RemoveRange(0, highestNumberPosition + 1);
-            var secondNumbersSorted = new List<string>();
-            foreach (var s in numbers)
-            {
-                secondNumbersSorted.Add(s);
-            }
-            secondNumbersSorted.Sort();
-            secondNumbersSorted.Reverse();
-
-            var secondHighestNumber = secondNumbersSorted.First();
-            var secondHighestNumberPosition = numbers.FindIndex(n => n == secondHighestNumber);
+            var secondHighestNumberFollowingFirstHighestPosition = numberListAfterFirstHighestPositionSorted.First();
+            var secondHighestNumberPosition = numberListAfterFirstHighestPosition.FindIndex(n => n == secondHighestNumberFollowingFirstHighestPosition);
 
             string combined = "";
-            combined = highestNumber + secondHighestNumber;
+
+            if (lastNumberWasHighestNumber)
+            {
+                combined = secondHighestNumberFollowingFirstHighestPosition + highestNumber;
+            }
+            else
+            {
+                combined = highestNumber + secondHighestNumberFollowingFirstHighestPosition;
+            }
 
             return Convert.ToInt32(combined);
+        }
+
+        private static List<string> GetSorted(List<string> numberList)
+        {
+            var numberListStored = new List<string>();
+            foreach (var s in numberList)
+            {
+                numberListStored.Add(s);
+            }
+            numberListStored.Sort();
+            numberListStored.Reverse();
+            return numberListStored;
         }
     }
 }
